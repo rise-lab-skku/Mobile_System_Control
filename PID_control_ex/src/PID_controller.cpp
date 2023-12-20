@@ -92,9 +92,6 @@ namespace mobile_system_control
         impl_->theta = input->data[2];
         impl_->vel = input->data[3];
         impl_->steer = input->data[4];
-        std::cout << "x: " << input->data[0] << std::endl;
-        std::cout << "y: " << input->data[1] << std::endl;
-        std::cout << "theta: " << input->data[2] << std::endl;
         RunPID();
     }
 
@@ -105,12 +102,6 @@ namespace mobile_system_control
 
         double ref_theta = atan2(impl_->track[idx_2].y - impl_->track[idx_1].y,
                                  impl_->track[idx_2].x - impl_->track[idx_1].x);
-
-        ROS_WARN("ref  %f", ref_theta * 180 / M_PI);
-        ROS_WARN("cur  %f", impl_->theta * 180 / M_PI);
-        ROS_WARN("idx 1: %f %f", impl_->track[idx_1].x, impl_->track[idx_1].y);
-        ROS_WARN("idx 2: %f %f", impl_->track[idx_2].x, impl_->track[idx_2].y);
-        ROS_WARN("idx %d %d", idx_1, idx_2);
 
         double err = ref_theta - impl_->theta;
 
@@ -133,10 +124,6 @@ namespace mobile_system_control
         cmd.vector.y = -control_cmd;
         cmd.vector.z = 0.0;
         impl_->pub_cmd.publish(cmd);
-
-        std::cout << "error: " << err << std::endl;
-        std::cout << "p cmd: " << p_control << std::endl;
-        std::cout << "i cmd: " << impl_->err_sum << std::endl;
     }
 
     int PIDController::FindClosestIndex()
@@ -154,7 +141,6 @@ namespace mobile_system_control
             }
             cur_idx++;
         }
-        ROS_WARN("idx %d, %f", closest_idx, dis);
 
         return closest_idx;
     }
