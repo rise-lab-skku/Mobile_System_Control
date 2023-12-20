@@ -1,0 +1,10 @@
+<launch>
+    <node pkg="PID_control_ex" type="PID_control_ex_node" name="PID_control_ex_node" output="screen" respawn="true">
+    <param name="path" value="$(find PID_control_ex)/../track/reference_path.csv" type="str" />
+    <rosparam>
+        Kp: 0.8
+        Ki: 0.5
+        accel: 0.8
+    </rosparam>  
+    </node>
+</launch>
