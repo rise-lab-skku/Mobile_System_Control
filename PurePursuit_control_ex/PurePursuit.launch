@@ -1,0 +1,8 @@
+<launch>
+    <node pkg="PurePursuit_control_ex" type="PurePursuit_control_ex_node" name="PurePursuit_control_ex_node" output="screen" respawn="true">
+    <param name="path" value="$(find PurePursuit_control_ex)/../track/reference_path.csv" type="str" />
+    <rosparam>
+        LD: 5.0
+    </rosparam>  
+    </node>
+</launch>
