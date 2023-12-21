@@ -1,0 +1,10 @@
+<launch>
+    <node pkg="Kanayama_control_ex" type="Kanayama_control_ex_node" name="Kanayama_control_ex_node" output="screen" respawn="true">
+    <param name="path" value="$(find Kanayama_control_ex)/../track/reference_path.csv" type="str" />
+    <rosparam>
+        K_x: 1.0
+        K_y: 0.08
+        K_t: 0.05
+    </rosparam>  
+    </node>
+</launch>
