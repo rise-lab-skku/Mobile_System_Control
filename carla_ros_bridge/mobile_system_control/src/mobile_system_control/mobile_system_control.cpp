@@ -18,9 +18,9 @@ namespace mobile_system_control
         ros::Subscriber sub_carla_ego;
         ros::Subscriber sub_carla_obj;
         ros::Subscriber sub_user_ctrl;
-        
-        ros::Publisher  pub_state2user;
-        ros::Publisher  pub_ctrl2carla;        
+
+        ros::Publisher pub_state2user;
+        ros::Publisher pub_ctrl2carla;
 
         std_msgs::Float32MultiArray state;
     };
@@ -37,18 +37,17 @@ namespace mobile_system_control
         impl_->sub_carla_obj = nh.subscribe("carla_obj", 1, &Carla::CarlaOdomCallback, this);
         // control msg from user
         impl_->sub_user_ctrl = nh.subscribe("user_ctrl", 1, &Carla::UserCtrlCallback, this);
-        
+
         // initialize publishers
         // ego status to user
         impl_->pub_state2user = nh.advertise<std_msgs::Float32MultiArray>("state2user", 2);
-        // control msg to carla 
+        // control msg to carla
         impl_->pub_ctrl2carla = nh.advertise<carla_msgs::CarlaEgoVehicleControl>("ctrl2carla", 2);
 
         setTopic();
-
     }
 
-    void Carla::CarlaEgoCallback(const carla_msgs::CarlaEgoVehicleStatus::ConstPtr& msg)
+    void Carla::CarlaEgoCallback(const carla_msgs::CarlaEgoVehicleStatus::ConstPtr &msg)
     {
         impl_->state.data.clear();
         impl_->state.data.push_back(0);
@@ -59,17 +58,19 @@ namespace mobile_system_control
         return;
     }
 
-    void Carla::CarlaOdomCallback(const nav_msgs::Odometry::ConstPtr& msg)
+    void Carla::CarlaOdomCallback(const nav_msgs::Odometry::ConstPtr &msg)
     {
         impl_->state.data[0] = msg->pose.pose.position.x;
         impl_->state.data[1] = msg->pose.pose.position.y;
         float siny_cosp_ = 2 * (msg->pose.pose.orientation.w * msg->pose.pose.orientation.z + msg->pose.pose.orientation.x * msg->pose.pose.orientation.y);
         float cosy_cosp_ = 1 - 2 * (pow(msg->pose.pose.orientation.y, 2) + pow(msg->pose.pose.orientation.z, 2));
         impl_->state.data[2] = atan2(siny_cosp_, cosy_cosp_);
+        impl_->pub_state2user.publish(impl_->state);
+
         return;
     }
 
-    void Carla::UserCtrlCallback(const geometry_msgs::Vector3Stamped::ConstPtr& msg)
+    void Carla::UserCtrlCallback(const geometry_msgs::Vector3Stamped::ConstPtr &msg)
     {
         carla_msgs::CarlaEgoVehicleControl ctrl_;
         ctrl_.header = msg->header;
@@ -82,7 +83,7 @@ namespace mobile_system_control
         ctrl_.reverse = false;
         ctrl_.gear = 1;
         ctrl_.manual_gear_shift = false;
-        
+
         impl_->pub_ctrl2carla.publish(ctrl_);
         return;
     }
@@ -112,7 +113,6 @@ namespace mobile_system_control
 
     void Carla::SpinOnce()
     {
-        impl_->pub_state2user.publish(impl_->state);
     }
 
 }
