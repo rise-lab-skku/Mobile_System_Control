@@ -50,7 +50,6 @@ namespace mobile_system_control
 
     void Carla::CarlaEgoCallback(const carla_msgs::CarlaEgoVehicleStatus::ConstPtr& msg)
     {
-        impl_->state.data.clear();
         impl_->state.data.push_back(0);
         impl_->state.data.push_back(0);
         impl_->state.data.push_back(0);
