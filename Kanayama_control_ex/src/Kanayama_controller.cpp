@@ -110,8 +110,8 @@ namespace mobile_system_control
 
     void KanayamaController::RunKanayama()
     {
-        PointXY ref = impl_->track[(FindClosestIndex() + 1) % impl_->track.size()];
-        PointXY ref_next = impl_->track[(FindClosestIndex() + 2) % impl_->track.size()];
+        PointXY ref = impl_->track[(FindClosestIndex() + 5) % impl_->track.size()];
+        PointXY ref_next = impl_->track[(FindClosestIndex() + 6) % impl_->track.size()];
 
         PointXY err_state;
         err_state.x = std::cos(impl_->theta) * (ref.x - impl_->x) + std::sin(impl_->theta) * (ref.y - impl_->y);
@@ -119,8 +119,15 @@ namespace mobile_system_control
 
         float ref_theta = atan2(ref_next.y - ref.y, ref_next.x - ref.x);
         float err_theta = ref_theta - impl_->theta;
-        err_theta = (err_theta > M_PI) ? err_theta - 2 * M_PI : err_theta;
-        err_theta = (err_theta < -M_PI) ? err_theta + 2 * M_PI : err_theta;
+
+        if (err_theta > M_PI / 2)
+        {
+            err_theta - 2 * M_PI;
+        }
+        else if (err_theta < -M_PI / 2)
+        {
+            err_theta + 2 * M_PI;
+        }
 
         // calculate control inputs
         double speed = impl_->v_ref * std::cos(err_theta) * 5 / 18 + impl_->K_x * err_state.x; // change km/h to m/s
