@@ -4,7 +4,7 @@ This is the repository for **Mobile System Control** lecture
    ![mpc](https://github.com/rise-lab-skku/Mobile_System_Control/assets/80592399/8638328b-c6c6-4007-86b4-e025b3875c0c)
 
 ## Launching CARLA
-1. Download CARLA: [link](https://o365skku-my.sharepoint.com/:u:/g/personal/jongsoo_o365_skku_edu/EZXaoPYY1bBHuZj-3jaWkdUByWt0EGLW3NphVpkNXaJPbg)
+1. Download CARLA: [Mobile System Control package version of CARLA simulator](https://o365skku-my.sharepoint.com/:u:/g/personal/jongsoo_o365_skku_edu/EZXaoPYY1bBHuZj-3jaWkdUByWt0EGLW3NphVpkNXaJPbg)
 2. Launch CARLA
     ```sh
     ./CarlaUE4.sh
