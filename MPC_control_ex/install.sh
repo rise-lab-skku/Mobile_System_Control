@@ -31,6 +31,6 @@ cd $current_directory
 cd External/osqp-eigen
 mkdir -p build
 cd build
-cmake -DCMAKE_INSTALL_PREFIX=$(realpath ../) -DOSQP_PATH=$(realpath ../../osqp/lib) ..
+cmake -DCMAKE_INSTALL_PREFIX=$(realpath ../) -DCMAKE_PREFIX_PATH=$(realpath ../../osqp/lib/cmake/osqp) ..
 make -j8
 sudo make install -j8
