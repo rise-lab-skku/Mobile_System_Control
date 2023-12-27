@@ -1,0 +1,18 @@
+<launch>
+    <node pkg="MPC_control_ex" type="MPC_control_ex_node" name="MPC_control_ex_node" output="screen" respawn="true">
+    <param name="path" value="$(find MPC_control_ex)/../track/reference_path.csv" type="str" />
+    <rosparam>
+        ControlNum: 20
+        Q: 3
+        P: 1
+        R: 1
+        x_threshold: 8.0
+        y_threshold: 8.0
+        head_threshold: 360
+        time_interval: 0.1
+        K_x: 1.0
+        K_y: 0.08
+        K_t: 0.05
+    </rosparam>  
+    </node>
+</launch>
