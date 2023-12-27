@@ -3,6 +3,8 @@ set -e
 
 current_directory=$(pwd)
 
+rm -rf $current_directory/External
+
 cd /usr/include
 sudo ln -sf eigen3/Eigen Eigen 
 sudo ln -sf eigen3/unsupported unsupported
