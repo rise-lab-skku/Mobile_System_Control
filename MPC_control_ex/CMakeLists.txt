@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.0.2)
 project(MPC_control_ex)
 
-set(OsqpEigen_DIR ${CMAKE_SOURCE_DIR}/External/osqp-eigen/lib/cmake/OsqpEigen)
-set(osqp_DIR ${CMAKE_SOURCE_DIR}/External/osqp/lib/cmake/osqp)
+set(OsqpEigen_DIR ${CMAKE_SOURCE_DIR}/Mobile_System_Control/MPC_control_ex/External/osqp-eigen/lib/cmake/OsqpEigen)
+set(osqp_DIR ${CMAKE_SOURCE_DIR}/Mobile_System_Control/MPC_control_ex/External/osqp/lib/cmake/osqp)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
 # add_compile_options(-std=c++11)
