@@ -11,7 +11,7 @@ This is the repository for **Mobile System Control** lecture
     ```
 ## Set CARLA API
 1. Check the directory of Python API in CARLA simulator
-2. add PYTHONPATH in ~/.bashrc or ~/.zshrc
+2. Add PYTHONPATH in ~/.bashrc or ~/.zshrc
 * bash
     ```sh
     echo "PYTHONPATH=$PYTHONPATH:~/Downloads/CARLA_package/CARLA/PythonAPI/carla/dist/carla-0.9.15-py3.8-linux-x86_64.egg:~/Downloads/CARLA_package/CARLA/PythonAPI/carla/" >> ~/.bashrc
