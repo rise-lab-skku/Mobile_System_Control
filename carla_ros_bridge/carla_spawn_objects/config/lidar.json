@@ -1,0 +1,49 @@
+{   
+    "objects": 
+    [
+        {
+            "type": "sensor.pseudo.actor_list",
+            "id": "actor_list"
+        },
+        {
+            "type": "vehicle.unmannedsolution.erp42",
+            "id": "ego_vehicle",
+            "sensors": 
+            [
+                {
+                    "type": "sensor.camera.rgb",
+                    "id": "rgb_view",
+                    "spawn_point": {"x": -4.5, "y": 0.0, "z": 2.8, "roll": 0.0, "pitch": 20.0, "yaw": 0.0},
+                    "image_size_x": 800,
+                    "image_size_y": 600,
+                    "fov": 120.0,
+                    "sensor_tick": 0.05,
+                    "attached_objects":
+                    [
+                        {
+                            "type": "actor.pseudo.control",
+                            "id": "control"
+                        }
+                    ]
+                },
+                {
+                    "type": "sensor.lidar.ray_cast",
+                    "id": "lidar",
+                    "spawn_point": {"x": -0.11, "y": 0.0, "z": 0.92, "roll": 0.0, "pitch": 0.0, "yaw": 0.0},
+                    "range": 50,
+                    "channels": 16,
+                    "points_per_second": 320000,
+                    "upper_fov": 15.0,
+                    "lower_fov":-15.0,
+                    "rotation_frequency": 70,
+                    "noise_stddev": 0.01,
+                    "sensor_tick": 0.05
+                },
+                {
+                    "type": "actor.pseudo.control",
+                    "id": "control"
+                }
+            ]
+        }
+    ]
+}
