@@ -14,8 +14,4 @@
     <param name="spawn_sensors_only" value="$(arg spawn_sensors_only)" />
   </node>
 
-  <group if="$(eval arg('objects_name')=='ego')">
-    <node pkg="tf" type="static_transform_publisher" name="ego_lidar_to_base_link" args="0.415 0 1.0 0 0 0 base_link ego_vehicle/lidar 20" />
-  </group>
-
 </launch>
