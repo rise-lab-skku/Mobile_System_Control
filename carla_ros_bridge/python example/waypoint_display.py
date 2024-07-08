@@ -15,6 +15,8 @@ def main():
     num = 0
 
     for point in spawn_points:
+        print(point)
+        print(type(point))
         order = chr(int(num / 10) + 48) + chr(num - int(num/10) * 10 + 48)
         world.debug.draw_string(point.location, order, draw_shadow=False,
         color=carla.Color(r=0, g=0, b=255), life_time=600.0, persistent_lines=True)

@@ -25,6 +25,7 @@ import logging
 import math
 import random
 import time
+import random
 
 
 
@@ -62,8 +63,6 @@ class World(object):
     def __init__(self, carla_world, args):
         self.world = carla_world
         self.sync = args.sync
-        self.max_vehicles = args.max_vehicles
-        self.speed = str(args.speed)
         try:
             self.map = self.world.get_map()
         except RuntimeError as error:
@@ -75,44 +74,35 @@ class World(object):
         self.players = []
         self._actor_generation = args.generation
         self.start()
-        # self.world.on_tick(hud.on_world_tick)
         self.constant_velocity_enabled = False
 
     def start(self):
 
-        spawn_points = self.world.get_map().get_spawn_points()
-        max_vehicles = self.max_vehicles
-        max_vehicles = min([max_vehicles, len(spawn_points)])
+        self.spawn_point_list = [1, 2, 5]
 
-        # Get a erp42 blueprint.
         blueprints = []
-        traffic = []
-        # blueprint = random.choice(get_actor_blueprints(self.world, 'erp42'+self.speed, self._actor_generation))
         blueprint = random.choice(get_actor_blueprints(self.world, 'erp42npc15', self._actor_generation))
 
-        if blueprint.has_attribute('terramechanics'):
-            blueprint.set_attribute('terramechanics', 'true')
         if blueprint.has_attribute('color'):
             color = random.choice(blueprint.get_attribute('color').recommended_values)
             blueprint.set_attribute('color', color)
-        if blueprint.has_attribute('driver_id'):
-            driver_id = random.choice(blueprint.get_attribute('driver_id').recommended_values)
-            blueprint.set_attribute('driver_id', driver_id)
-        if blueprint.has_attribute('is_invincible'):
-            blueprint.set_attribute('is_invincible', 'true')
-
-        for i in range(max_vehicles):
-            blueprint.set_attribute('role_name', 'npc'+self.speed+str(i))
+            print(color)
+        
+        randid=random.randrange(0,50)
+        for i in range(len(self.spawn_point_list)):
+            blueprint.set_attribute('role_name', 'npc' + str(randid + i))
             blueprints.append(blueprint)
 
         spawn_points = self.map.get_spawn_points()
 
-        for i, spawn_point in enumerate(random.sample(spawn_points, max_vehicles)):
-            temp = self.world.try_spawn_actor(blueprints[i], spawn_point)
+        for i, spawn_point in enumerate(self.spawn_point_list):
+            temp = self.world.try_spawn_actor(blueprints[i], spawn_points[spawn_point])
             self.show_vehicle_telemetry = False
-            temp.set_autopilot(True)
             if temp is not None:
                 self.players.append(temp)
+
+        for npc in self.players:
+            npc.set_autopilot(True)
 
         if self.sync:
             self.world.tick()
@@ -121,7 +111,11 @@ class World(object):
 
     def destroy(self):
         for i in range(len(self.players)):
-            self.players[i].destroy()
+            try:
+                self.players[i].destroy()
+                time.sleep(0.05)
+            except:
+                continue
 
 
 
@@ -146,10 +140,6 @@ def spawn_loop(args):
             traffic_manager.set_synchronous_mode(True)
 
         world = World(sim_world, args)
-        # controller = KeyboardControl(world, args.autopilot)
-
-        # print(world.get_speed_set_vehicle())
-        # traffic_manager.vehicle_percentage_speed_difference(1, -20.0) 
 
         if args.sync:
             sim_world.tick()
@@ -159,11 +149,6 @@ def spawn_loop(args):
         while True:
             if args.sync:
                 sim_world.tick()
-            # clock.tick_busy_loop(60)
-            # if controller.parse_events(client, world, clock, args.sync):
-                # return
-            # world.tick(clock)
-            # world.render(display)
 
     finally:
 
@@ -204,7 +189,7 @@ def main():
     argparser.add_argument(
         '--generation',
         metavar='G',
-        default='2',
+        default='4',
         help='restrict to certain actor generation (values: "1","2","All" - default: "2")')
     argparser.add_argument(
         '--gamma',
@@ -215,16 +200,6 @@ def main():
         '--sync',
         action='store_true',
         help='Activate synchronous mode execution')
-    argparser.add_argument(
-        '--max_vehicles',
-        default=55,
-        type=int,
-        help='max vehicles to spawn (default: 50)')
-    argparser.add_argument(
-        '--speed',
-        default=20,
-        type=int,
-        help='speed of vehicles to spawn (default: 20)')
     args = argparser.parse_args()
 
     args.width, args.height = [int(x) for x in args.res.split('x')]

@@ -52,8 +52,9 @@ def find_weather_presets():
     return [(getattr(carla.WeatherParameters, x), x) for x in presets]
 
 
-def list_options(client):
+def list_options(client, world):
     maps = [m.replace('/Game/Carla/Maps/', '') for m in client.get_available_maps()]
+    vehicles = [bp.id for bp in world.get_blueprint_library().filter("vehicle")]
     indent = 4 * ' '
     def wrap(text):
         return '\n'.join(textwrap.wrap(text, initial_indent=indent, subsequent_indent=indent))
@@ -61,6 +62,8 @@ def list_options(client):
     print(wrap(', '.join(x for _, x in find_weather_presets())) + '.\n')
     print('available maps:\n')
     print(wrap(', '.join(sorted(maps))) + '.\n')
+    print('available vehicle:\n')
+    print(wrap(', '.join(sorted(vehicles))) + '.\n')
 
 
 def list_blueprints(world, bp_filter):
@@ -310,9 +313,7 @@ def main():
     if args.inspect:
         inspect(args, client)
     if args.list:
-        list_options(client)
-    if args.list_blueprints:
-        list_blueprints(world, args.list_blueprints)
+        list_options(client, world)
 
 
 if __name__ == '__main__':
