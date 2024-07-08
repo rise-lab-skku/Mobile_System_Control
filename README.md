@@ -25,11 +25,11 @@ This is the repository for **Mobile System Control** lecture
     catkin build
     ```
 2. Build Packages
-* Install external library for QP solver
+* Install external library for QP solver and CARLA messages
     ```
     cd ~/catkin_ws/src
     git clone https://github.com/rise-lab-skku/Mobile_System_Control.git
-    cd Mobile_System_Control/MPC_control_ex
+    cd Mobile_System_Control
     sudo ./install.sh
     ```
 * Build packages
