@@ -2,7 +2,7 @@
 set -e
 
 sudo apt-get install -y ros-noetic-derived-object-msgs ros-noetic-carla-msgs
-pip3 install transforms3d networkx  
+pip3 install transforms3d networkx pygame
 
 current_directory=$(pwd)
 
