@@ -7,7 +7,7 @@
                 <remap from="~track"           to="/mobile_system_control_vis/track"/>
                 <remap from="~vehicle"         to="/mobile_system_control_vis/vehicle"/>
 
-		<param name="csv_dir"           value="$(find mobile_system_control_vis)/../../track/reference_path.csv" />
+		<param name="csv_dir"           value="$(find mobile_system_control_vis)/track/reference_path.csv" />
 
         </node>
 
