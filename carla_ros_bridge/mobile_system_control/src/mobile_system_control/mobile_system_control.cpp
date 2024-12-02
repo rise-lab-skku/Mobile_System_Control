@@ -49,11 +49,11 @@ namespace mobile_system_control
 
     void Carla::CarlaEgoCallback(const carla_msgs::CarlaEgoVehicleStatus::ConstPtr &msg)
     {
-        impl_->state.data.push_back(0);
-        impl_->state.data.push_back(0);
-        impl_->state.data.push_back(0);
-        impl_->state.data.push_back(msg->velocity);
-        impl_->state.data.push_back(msg->control.steer);
+        impl_->state.data[0] = 0;
+        impl_->state.data[1] = 0;
+        impl_->state.data[2] = 0;
+        impl_->state.data[3] = msg->velocity;
+        impl_->state.data[4] = msg->control.steer;
         return;
     }
 
@@ -107,6 +107,11 @@ namespace mobile_system_control
         impl_->state.layout.dim.push_back(dim_);
 
         impl_->state.layout.data_offset = 0;
+        impl_->state.data.push_back(0);
+        impl_->state.data.push_back(0);
+        impl_->state.data.push_back(0);
+        impl_->state.data.push_back(0);
+        impl_->state.data.push_back(0);
         return;
     }
 
